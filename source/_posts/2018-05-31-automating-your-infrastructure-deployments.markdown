@@ -55,34 +55,31 @@ I have followed many of the best practices described in the book [Terraform: Up 
 
 ## Suggested workflow
 
-Assuming you have two environments, `production` and `staging`, when a new feature is requested you branch from `staging`, commit the code and open a PR to the `staging` branch. After that, CircleCI will run two jobs, one for linting and one that will plan the changes to your `staging` infrastructure so you can review them (see image below).
+Assuming you have two environments, `production` and `staging`: when a new feature is requested, you branch from `staging`, commit the code and open a PR to the `staging` branch. After that, CircleCI will run two jobs, one for linting and one that will plan the changes to your `staging` infrastructure so that you can review them (see image below).
 
 ![Image of PR creation jobs](https://raw.githubusercontent.com/fedekau/terraform-with-circleci-example/staging/.images/pr.png)
 
-Once you merge the PR, if everything goes as planned, CircleCI will run your jobs and will automatically deploy your infrastructure!
+Once you merge the PR, if everything goes as planned, CircleCI will run your jobs and automatically deploy your infrastructure!
 
 ![Image of jobs after staging merge](https://raw.githubusercontent.com/fedekau/terraform-with-circleci-example/staging/.images/staging-merge.png)
 
-After you have tested your infrastructure in `staging` you just need to open a PR from `staging` into `master` to "promote" you infrastructure into `production`.
+After you have tested your infrastructure in `staging`, you just need to open a PR from `staging` to `master` to "promote" your infrastructure to `production`.
 
-In this case we want someone to manually approve the release into master, so after you merge you need to tell CircleCI that it can proceed and it will deploy the infrastructure after the confirmation.
+In this case, we want someone to manually approve the release to master, so after you merge you need to tell CircleCI that it can proceed and it will deploy the infrastructure after receiving confirmation.
 
 ![Image of jobs after master merge](https://raw.githubusercontent.com/fedekau/terraform-with-circleci-example/staging/.images/master-merge.png)
 
 ## Improvements
 
-This is a very basic workflow and there are many things that must (or can) be improved. Here are some of them:
+This is a very basic workflow and there are many things that must (or can) be improved upon. Here are a couple of them:
 
-- The most important improvement that needs to be done, in my opinion, is to add a way to test the infrastructure for each PR before merging them into `staging`. Something like the [Heroku Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps). If you use Terraform modules and you write them in a generic way you could very easily implement this.
-- Add tests! This is of course a must in every project, if you want quality you need testing. For this purpose you can use tools like [KitchenCI](https://kitchen.ci/) or [InSpec](https://www.inspec.io/).
+- The most important improvement that needs to be made, in my opinion, is to add a way to test the infrastructure for each PR before merging them with `staging`. Perhaps something like the [Heroku Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps) would be best. If you use Terraform modules and you write them in a generic way, you could very easily implement infrastructure testing.
+- Add tests! This is of course a must in every project. If you want quality, you need to test. You can use tools like [KitchenCI](https://kitchen.ci/) or [InSpec](https://www.inspec.io/) to accomplish this.
 
 # Conclusions
 
-I always like to include some conclusion in my articles, so here are some very general conclusions that can be extracted:
+I always like to present some final, very general takeaways in my articles, so here are a few:
 
 - Try to automate more. This will lead your team towards efficiency and make it less error prone.
-- Use infrastructure as code tools. This helps with maintainability and understanding all the pieces.
-- Find ways around problems, don't let problems mold you.
-
-
-
+- Use IaC tools. Doing so will help with maintainability and understanding of all the pieces.
+- Find ways around problems; don't let problems mold you.
